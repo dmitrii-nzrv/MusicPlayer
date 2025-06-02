@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct SongCell: View {
+    // MARK: ~ Properties
+    let song: SongModel
+     
+    // MARK: ~ Body
     var body: some View {
         HStack{
             Color.white
@@ -15,9 +19,9 @@ struct SongCell: View {
                 .cornerRadius(10)
             
             VStack(alignment: .leading){
-                Text("Hurt")
+                Text(song.name)
                     .nameFont()
-                Text("Johnny Cash")
+                Text(song.artist ?? "Unknown artist")
                     .artistFont()
             }
             

@@ -13,24 +13,8 @@ struct PlayerView: View {
             BackgroundView()
             
             List{
-                HStack{
-                    Color.white
-                        .frame(width: 60, height: 60)
-                        .cornerRadius(10)
-                    
-                    VStack(alignment: .leading){
-                        Text("Hurt")
-                            .nameFont()
-                        Text("Johnny Cash")
-                            .artistFont()
-                    }
-                    
-                    Spacer()
-                    
-                    Text("03:48")
-                }
+                SongCell()
             }
-            
             .listStyle(.plain)
         }
         
@@ -40,5 +24,6 @@ struct PlayerView: View {
 #Preview {
     PlayerView()
 }
+
 
 

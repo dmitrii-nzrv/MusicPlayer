@@ -55,7 +55,7 @@ struct ImportFileManager: UIViewControllerRepresentable {
                 let metadata = asset.metadata
                 for item in metadata {
                     
-                    guard let key = item.commonKey?.rawValue, let value = item.value as? String else { continue }
+                    guard let key = item.commonKey?.rawValue, let value = item.value else { continue }
                     switch key {
                     case AVMetadataKey.commonKeyArtist.rawValue:
                         song.artist = value as? String

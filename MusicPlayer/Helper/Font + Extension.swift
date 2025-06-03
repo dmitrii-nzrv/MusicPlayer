@@ -7,7 +7,21 @@
 
 import SwiftUI
 
+// приминимо к структурам 
+struct DurationFontModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(.white)
+            .font(.system(size: 14, weight: .light, design: .rounded))
+    }
+}
 
+extension View {
+    func durationFont() -> some View {
+        self.modifier(DurationFontModifier())
+    }
+}
+// приминимо только к вьюшке
 extension Text {
     func nameFont() -> some View{
         self

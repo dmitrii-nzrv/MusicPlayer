@@ -8,7 +8,7 @@
 import Foundation
 import AVFAudio
 
-class ViewModel: ObservableObject {
+class ViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     // MARK: ~ Properties
     @Published var songs: [SongModel] = []
     @Published var audioPlayer: AVAudioPlayer?
@@ -28,6 +28,7 @@ class ViewModel: ObservableObject {
     func playAudio(song: SongModel){
         do {
             self.audioPlayer = try AVAudioPlayer(data: song.data)
+            self.audioPlayer?.delegate = self
             self.audioPlayer?.play()
             isPlaying = true
             totalTime = audioPlayer?.duration ?? 0.0
@@ -37,6 +38,18 @@ class ViewModel: ObservableObject {
         } catch {
             print("Error playing audio: \(error.localizedDescription)")
         }
+    }
+    
+    func forward() {
+        guard let currentIndex = currentIndex else { return }
+        let nextIndex = currentIndex + 1 < songs.count ? currentIndex + 1 : 0
+        playAudio(song: songs[nextIndex])
+    }
+    
+    func backward() {
+        guard let currentIndex = currentIndex else { return }
+        let previusIndext = currentIndex > 0 ? currentIndex - 1 : songs.count - 1
+        playAudio(song: songs[previusIndext])
     }
     
     func durationFormatted(_ duration: Double) -> String {
@@ -58,8 +71,27 @@ class ViewModel: ObservableObject {
         audioPlayer?.currentTime = time
     }
     
+    func stopAudio() {
+        audioPlayer?.stop()
+        audioPlayer = nil 
+        isPlaying = false
+    }
+    
     func updateProgress() {
         guard let player = audioPlayer else { return }
         currentTime = player.currentTime
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            forward()
+        }
+    }
+    
+    func delete(offsets: IndexSet) {
+        if let first = offsets.first {
+            stopAudio()
+            songs.remove(at: first)
+        }
     }
 }

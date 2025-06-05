@@ -24,9 +24,11 @@ struct PlayerView: View {
     var body: some View {
         NavigationStack {
             ZStack{
+                // MARK: ~ Background
                 BackgroundView()
                 
                 VStack {
+                    // MARK: ~ List of songs
                     List {
                         ForEach(vm.songs){ song in
                             SongCell(song: song, durationFormatted: vm.durationFormatted)
@@ -34,6 +36,7 @@ struct PlayerView: View {
                                     vm.playAudio(song: song)
                                 }
                         }
+                        .onDelete(perform: vm.delete)
                     }
                     .listStyle(.plain)
                     
@@ -83,24 +86,7 @@ struct PlayerView: View {
             /// Mini player
             HStack {
                 // image cover
-                if let data = vm.currentSong?.coverImage, let uiImage = UIImage(data: data) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: frameImage, height: frameImage)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                } else {
-                    ZStack{
-                        Color.gray
-                            .frame(width: 60, height: 60)
-                        Image(systemName: "music.note")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 30)
-                            .foregroundStyle(.white)
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                }
+                SongImageView(imageData: vm.currentSong?.coverImage, size: frameImage)
                 
                 if !showFullPlayer {
                     VStack(alignment: .leading) {
@@ -143,7 +129,7 @@ struct PlayerView: View {
                     .padding()
                     
                     /// slider
-                    Slider(value: $vm.currentTime, in:  0...vm.totalTime) { editing in                        
+                    Slider(value: $vm.currentTime, in:  0...vm.totalTime) { editing in
                         if !editing {
                             vm.seekAudio(time: vm.currentTime)
                         }
@@ -158,13 +144,13 @@ struct PlayerView: View {
                     
                     HStack(spacing: 40) {
                         CustomButton(image: "backward.end.fill", size: .title2) {
-                            //
+                            vm.backward()
                         }
-                        CustomButton(image: "play.circle.fill", size: .largeTitle) {
-                            //
+                        CustomButton(image: vm.isPlaying ? "pause.circle.fill" : "play.circle.fill" , size: .largeTitle) {
+                            vm.playPause()
                         }
                         CustomButton(image: "forward.end.fill", size: .title2) {
-                            //
+                            vm.forward()
                         }
                     }
                 }

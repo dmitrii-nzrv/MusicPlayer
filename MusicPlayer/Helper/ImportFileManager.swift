@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 import AVFoundation
-
+import RealmSwift
 struct ImportFileManager: UIViewControllerRepresentable {
     
-    @Binding var songs: [SongModel]
+   
     // координатор управляет задачи между swiftui и uikit
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -34,6 +34,7 @@ struct ImportFileManager: UIViewControllerRepresentable {
         
         // ссылка на родительский компонент ImportFileManager, чтобы можно было с ним взаимодействовать
         var parent: ImportFileManager
+        @ObservedResults(SongModel.self) var songs
         
         init(parent: ImportFileManager) {
             self.parent = parent
@@ -70,10 +71,10 @@ struct ImportFileManager: UIViewControllerRepresentable {
                 }
                 song.duration = CMTimeGetSeconds(asset.duration)
                 
-                if !self.parent.songs.contains(where: { $0.name == song.name }) {
-                    DispatchQueue.main.async {
-                        self.parent.songs.append(song)
-                    }
+                let isDublicate = songs.contains { $0.name == song.name && $0.artist == song.artist }
+                
+                if !isDublicate {
+                    $songs.append(song)
                 } else {
                     print("the song already exists")
                 }

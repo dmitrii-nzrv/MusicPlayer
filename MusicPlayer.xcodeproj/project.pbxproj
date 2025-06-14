@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		28754C662DFB892900B8F008 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 28754C652DFB892900B8F008 /* RealmSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		285FDAF02DEA1BE900281F1A /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28754C662DFB892900B8F008 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = MusicPlayer;
 			packageProductDependencies = (
+				28754C652DFB892900B8F008 /* RealmSwift */,
 			);
 			productName = MusicPlayer;
 			productReference = 285FDAF02DEA1BE900281F1A /* MusicPlayer.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 285FDAE72DEA1BE900281F1A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				28754C642DFB892900B8F008 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 285FDAF12DEA1BE900281F1A /* Products */;
 			projectDirPath = "";
@@ -339,6 +348,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		28754C642DFB892900B8F008 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28754C652DFB892900B8F008 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28754C642DFB892900B8F008 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 285FDAE82DEA1BE900281F1A /* Project object */;
 }

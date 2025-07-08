@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: ~ SongCell
 struct SongCell: View {
     // MARK: ~ Properties
     let song: SongModel
@@ -14,23 +15,19 @@ struct SongCell: View {
     
     // MARK: ~ Body
     var body: some View {
-        HStack{
+        HStack {
             SongImageView(imageData: song.coverImage, size: 60)
-            
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 Text(song.name)
                     .nameFont()
                 Text(song.artist ?? "Unknown artist")
                     .artistFont()
             }
-            
             Spacer()
-            
-            if let duration = song.duration{
+            if let duration = song.duration {
                 Text(durationFormatted(duration))
                     .artistFont()
             }
-            
         }
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)

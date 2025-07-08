@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: ~ BackgroundView
 struct BackgroundView: View {
     var body: some View {
         LinearGradient(

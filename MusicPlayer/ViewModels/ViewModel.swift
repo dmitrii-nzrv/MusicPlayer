@@ -9,6 +9,7 @@ import Foundation
 import AVFAudio
 import RealmSwift
 
+// MARK: ~ ViewModel
 class ViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     // MARK: ~ Properties
     @ObservedResults(SongModel.self) var songs
@@ -18,22 +19,20 @@ class ViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var currentTime: TimeInterval = 0.0
     @Published var totalTime: TimeInterval = 0.0
     
-    
-    
     var currentSong: SongModel? {
         guard let currentIndex = currentIndex, songs.indices.contains(currentIndex) else { return nil }
         return songs[currentIndex]
     }
     
     // MARK: ~ Methods
-    func playAudio(song: SongModel){
+    func playAudio(song: SongModel) {
         do {
             self.audioPlayer = try AVAudioPlayer(data: song.data)
             self.audioPlayer?.delegate = self
             self.audioPlayer?.play()
             isPlaying = true
             totalTime = audioPlayer?.duration ?? 0.0
-            if let index = songs.firstIndex(where: { $0.id == song.id} ) {
+            if let index = songs.firstIndex(where: { $0.id == song.id }) {
                 currentIndex = index
             }
         } catch {
@@ -49,8 +48,8 @@ class ViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     func backward() {
         guard let currentIndex = currentIndex else { return }
-        let previusIndext = currentIndex > 0 ? currentIndex - 1 : songs.count - 1
-        playAudio(song: songs[previusIndext])
+        let previousIndex = currentIndex > 0 ? currentIndex - 1 : songs.count - 1
+        playAudio(song: songs[previousIndex])
     }
     
     func durationFormatted(_ duration: Double) -> String {
@@ -74,7 +73,7 @@ class ViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     func stopAudio() {
         audioPlayer?.stop()
-        audioPlayer = nil 
+        audioPlayer = nil
         isPlaying = false
     }
     
@@ -83,11 +82,10 @@ class ViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
         currentTime = player.currentTime
     }
     
+    // MARK: ~ AVAudioPlayerDelegate
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
             forward()
         }
     }
-    
-   
 }

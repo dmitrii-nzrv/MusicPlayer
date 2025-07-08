@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// приминимо к структурам 
+// MARK: ~ DurationFontModifier
 struct DurationFontModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -16,20 +16,21 @@ struct DurationFontModifier: ViewModifier {
     }
 }
 
+// MARK: ~ Extensions
 extension View {
     func durationFont() -> some View {
         self.modifier(DurationFontModifier())
     }
 }
-// приминимо только к вьюшке
+
 extension Text {
-    func nameFont() -> some View{
+    func nameFont() -> some View {
         self
             .foregroundStyle(.white)
             .font(.system(size: 16, weight: .semibold, design: .rounded))
     }
     
-    func artistFont() -> some View{
+    func artistFont() -> some View {
         self
             .foregroundStyle(.white)
             .font(.system(size: 14, weight: .light, design: .rounded))
@@ -37,16 +38,3 @@ extension Text {
 }
 
 
-
-struct FontsView: View {
-    var body: some View {
-        VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-                .nameFont()
-        }
-    }
-}
-
-#Preview {
-    FontsView()
-}

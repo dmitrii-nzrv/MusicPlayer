@@ -7,9 +7,10 @@
 
 import SwiftUI
 
+// MARK: ~ SongImageView
 struct SongImageView: View {
     // MARK: ~ Properties
-    let imageData : Data?
+    let imageData: Data?
     let size: CGFloat
     
     // MARK: ~ Body
@@ -21,17 +22,16 @@ struct SongImageView: View {
                 .frame(width: size, height: size)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
         } else {
-            ZStack{
+            ZStack {
                 Color.gray
                     .frame(width: size, height: size)
                 Image(systemName: "music.note")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: size/2)
+                    .frame(height: size / 2)
                     .foregroundStyle(.white)
             }
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
-        
     }
 }
